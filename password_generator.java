@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.ArrayList;
  
 class Password extends JFrame implements ActionListener {
     Container c;
@@ -15,19 +16,20 @@ class Password extends JFrame implements ActionListener {
         c.setLayout(new FlowLayout());
         title = new JLabel("Welcome to Strong Password Generator");
         
-        LcharNum = new JLabel("Enter Number of characters in password: ");
+        LcharNum = new JLabel("Enter Number of Lowercase Characters: ");
         LcharInput = new JTextField(10);
 
-        UcharNum = new JLabel("Enter Number of characters in password: ");
+        UcharNum = new JLabel("Enter Number of Upercase Characters: ");
         UcharInput = new JTextField(10);
 
-        symNum = new JLabel("Enter Number of symbols in password: ");
+        symNum = new JLabel("Enter Number of Symbols: ");
         symInput = new JTextField(10);
 
-        numNum = new JLabel("Enter Number of symbols in password: ");
+        numNum = new JLabel("Enter Number of Numbers: ");
         numInput = new JTextField(10);
 
         btnSubmit = new JButton("Submit");
+        
         c.add(title);
         c.add(LcharNum);
         c.add(LcharInput);
@@ -75,6 +77,50 @@ class Password extends JFrame implements ActionListener {
         }
         return string;
     }
+
+    public String generateSymbols(int len){
+        String symbletters="";
+        for(int i=1;i<=len;i++){
+            double choice = (Math.random()*(5-1))+1;      // Random numbers between 1 to 4
+            int choicenum = (int)choice;
+            double d=0;
+            switch(choicenum){
+                case 1:
+                    d = (Math.random()*(47-33))+33;       // ASCII values between 33 to 47
+                    break;
+                case 2:
+                    d = (Math.random()*(64-58))+58;       // ASCII values between 58 to 64
+                    break;
+                case 3:
+                    d = (Math.random()*(95-91))+91;       // ASCII values between 91 to 95
+                    break;
+                case 4:
+                    d = (Math.random()*(126-123))+123;    // ASCII values between 123 to 126
+                    break;
+                default:
+                    break;
+            }
+            int num = (int)d;
+            String s = Character.toString((char)num);
+            symbletters += s;
+        }
+        return symbletters;
+    }
+
+    public String shuffle(String input){
+        ArrayList<Character> chars = new ArrayList<Character>();
+
+        for(char c:input.toCharArray()){
+            chars.add(c);
+        }
+
+        StringBuilder output = new StringBuilder(input.length());
+
+        while(chars.size()!=0){
+            int rand = (Integer)(Math.random()*chars.size());
+            output.append(chars.remove(rand));
+        }
+    }
  
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == btnSubmit) {
@@ -83,12 +129,13 @@ class Password extends JFrame implements ActionListener {
             sym = Integer.parseInt(symInput.getText());
             num = Integer.parseInt(numInput.getText());
             // System.out.println(strUserName);
-            String password = "";
-            JOptionPane.showMessageDialog(c, Lcharacters);
+            // int password = Lcharacters+Ucharacters+sym+num;
+
+            String password = generateLC(Lcharacters)+generateUC(Ucharacters)+generateNum(num)+generateSymbols(sym);
+            JOptionPane.showMessageDialog(c, password);
         } else {
             System.exit(0);
         }
- 
     }
  
     public static void main(String z[]) {
