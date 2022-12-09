@@ -4,45 +4,87 @@ import java.awt.event.*;
  
 class Password extends JFrame implements ActionListener {
     Container c;
-    JLabel lblUserName, lblPassword;
-    JTextField txtUserName;
-    JPasswordField txtPassword;
-    JButton btnSubmit, btnClear, btnExit;
-    String strUserName, strPassword;
+    JLabel title, LcharNum, UcharNum, symNum, numNum;
+    JTextField LcharInput, UcharInput, symInput, numInput;
+
+    JButton btnSubmit;
+    Integer Lcharacters,Ucharacters, sym, num;
  
     Password() {
         c = getContentPane();
         c.setLayout(new FlowLayout());
-        lblUserName = new JLabel("Welcome to Strong Password Generator");
-        lblUserName = new JLabel("Enter Number of characters in password: ");
-        txtUserName = new JTextField(10);
+        title = new JLabel("Welcome to Strong Password Generator");
+        
+        LcharNum = new JLabel("Enter Number of characters in password: ");
+        LcharInput = new JTextField(10);
+
+        UcharNum = new JLabel("Enter Number of characters in password: ");
+        UcharInput = new JTextField(10);
+
+        symNum = new JLabel("Enter Number of symbols in password: ");
+        symInput = new JTextField(10);
+
+        numNum = new JLabel("Enter Number of symbols in password: ");
+        numInput = new JTextField(10);
 
         btnSubmit = new JButton("Submit");
-        c.add(lblUserName);
-        c.add(txtUserName);
+        c.add(title);
+        c.add(LcharNum);
+        c.add(LcharInput);
+        c.add(UcharNum);
+        c.add(UcharInput);
+        c.add(symNum);
+        c.add(symInput);
+        c.add(numNum);
+        c.add(numInput);
 
         c.add(btnSubmit);
 
         btnSubmit.addActionListener(this);
     }
+
+    public String generateLC(int len){
+        String LC = "";
+        for(int i=0; i<=len; i++){
+            double d = (Math.random()*(122-97))+97; //ASCII Values between 97-122
+            int num = (int)d;
+            String s = Character.toString((char)num);
+            LC += s;
+        }
+        return LC;
+    }
+
+    public String generateUC(int len){
+        String UC = "";
+        for(int i=0; i<=len; i++){
+            double d = (Math.random()*(91-65))+65; //ASCII Values between 65-91
+            int num = (int)d;
+            String s = Character.toString((char)num);
+            UC += s;
+        }
+        return UC;
+    }
+
+    public String generateNum(int len){
+        String string = "";
+        for(int i=0; i<=len; i++){
+            double d = (Math.random()*(57-48))+48; //ASCII Values between 65-91
+            int num = (int)d;
+            String s = Character.toString((char)num);
+            string += s;
+        }
+        return string;
+    }
  
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == btnSubmit) {
-            strUserName = txtUserName.getText();
-            strPassword = txtPassword.getPassword().toString();
-            if (strUserName.equals("prachet") && strPassword.equals("123")) {
-                JOptionPane.showMessageDialog(c, "Successful Login");
-                System.exit(0);
-            } else {
-                JOptionPane.showMessageDialog(c, "Unsuccessful Login");
-                txtUserName.setText("");
-                txtPassword.setText("");
-                txtUserName.requestFocus();
-            }
-        } else if (ae.getSource() == btnClear) {
-            txtUserName.setText("");
-            txtPassword.setText("");
-            txtUserName.requestFocus();
+            Lcharacters = Integer.parseInt(LcharInput.getText());
+            Ucharacters = Integer.parseInt(UcharInput.getText());
+            sym = Integer.parseInt(symInput.getText());
+            num = Integer.parseInt(numInput.getText());
+            // System.out.println(strUserName);
+            String password = "";
+            JOptionPane.showMessageDialog(c, Lcharacters);
         } else {
             System.exit(0);
         }
@@ -52,7 +94,7 @@ class Password extends JFrame implements ActionListener {
     public static void main(String z[]) {
         Password frm = new Password();
         frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frm.setBounds(200, 200, 250, 150);
+        frm.setBounds(200, 200, 400, 400);
         frm.setVisible(true);
     }
  
