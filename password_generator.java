@@ -135,7 +135,6 @@ class Password extends JFrame implements ActionListener {
 
             String password = generateLC(Lcharacters)+generateUC(Ucharacters)+generateNum(num)+generateSymbols(sym);
             String shuffledPassword = shuffle(password);
-            // JOptionPane.showMessageDialog(c, shuffledPassword, "Generated Random Password", 1);
             JLabel PASSWORD = new JLabel("Genereted Password: ");
             
             JTextField pass = new JTextField(shuffledPassword.toString());
