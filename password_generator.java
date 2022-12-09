@@ -22,10 +22,10 @@ class Password extends JFrame implements ActionListener {
         UcharNum = new JLabel("Enter Number of Upercase Characters: ");
         UcharInput = new JTextField(10);
 
-        symNum = new JLabel("Enter Number of Symbols: ");
+        symNum = new JLabel("Enter Number of Symbol Characters: ");
         symInput = new JTextField(10);
 
-        numNum = new JLabel("Enter Number of Numbers: ");
+        numNum = new JLabel("Enter Number of Number Characters: ");
         numInput = new JTextField(10);
 
         btnSubmit = new JButton("Submit");
@@ -117,9 +117,11 @@ class Password extends JFrame implements ActionListener {
         StringBuilder output = new StringBuilder(input.length());
 
         while(chars.size()!=0){
-            int rand = (Integer)(Math.random()*chars.size());
-            output.append(chars.remove(rand));
+            double rand = (Math.random()*chars.size());
+            int ans = (int)rand;
+            output.append(chars.remove(ans));
         }
+        return output.toString();
     }
  
     public void actionPerformed(ActionEvent ae) {
@@ -132,7 +134,22 @@ class Password extends JFrame implements ActionListener {
             // int password = Lcharacters+Ucharacters+sym+num;
 
             String password = generateLC(Lcharacters)+generateUC(Ucharacters)+generateNum(num)+generateSymbols(sym);
-            JOptionPane.showMessageDialog(c, password);
+            String shuffledPassword = shuffle(password);
+            // JOptionPane.showMessageDialog(c, shuffledPassword, "Generated Random Password", 1);
+            JLabel PASSWORD = new JLabel("Genereted Password: ");
+            
+            JTextField pass = new JTextField(shuffledPassword.toString());
+            pass.setEditable(false);
+            pass.setSize(20, 20);
+            pass.setBackground(null);
+            pass.setBorder(null);
+            Font font = new Font("Verdana", Font.BOLD, 25);
+            pass.setFont(font);
+
+            c.add(PASSWORD);
+            c.add(pass);
+            validate();
+            repaint();
         } else {
             System.exit(0);
         }
